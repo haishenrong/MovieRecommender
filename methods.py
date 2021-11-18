@@ -12,25 +12,25 @@ def read_ratings(amt=10):
     info =  next(csvreader)
     #print(info)
     rows = []
-    currUser = User(1)
+    currUser = {"userId":1, "ratings":{}}
     for row in csvreader:
-        if row[0] != str(currUser.userId):
+        if row[0] != str(currUser["userId"]):
             #print(row[0])
             rows.append(currUser)
-            currUser = User(row[0])
+            currUser = {"userId":row[0], "ratings":{}}
         if int(row[0]) > amt:
             break
-        currUser.ratings[int(row[1])] = float(row[2])
+        currUser["ratings"][int(row[1])] = float(row[2])
     return rows;
 
 def read_movies():
     file = io.open('ml-25m/movies.csv', mode="r", encoding="utf-8", errors="ignore")
     csvreader = csv.reader(file)
     info =  next(csvreader)
-    rows = []
+    rows = {}
     #k = 0
     for row in csvreader:
-        rows.append(int(row[0]))
+        rows[row[0]] = row[1]
         #k+=1
 
     return rows;
